@@ -57,6 +57,12 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
     // });
   }
 
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   void _play() {
     _animationController.forward();
   }
