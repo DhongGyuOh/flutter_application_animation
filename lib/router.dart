@@ -3,6 +3,7 @@ import 'package:flutter_application_animation/screens/explicit_animation_screen.
 import 'package:flutter_application_animation/screens/implicit_animation_screen.dart';
 import 'package:flutter_application_animation/screens/menu_screen.dart';
 import 'package:flutter_application_animation/screens/screen.dart';
+import 'package:flutter_application_animation/screens/swiping_cards_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(initialLocation: MenuScreen.routeURL, routes: [
@@ -31,5 +32,10 @@ final GoRouter router = GoRouter(initialLocation: MenuScreen.routeURL, routes: [
           name: AppleWatchScreen.routeName,
           builder: (context, state) => const AppleWatchScreen(),
         ),
+        GoRoute(
+          path: SwipingCardsScreen.routeURL,
+          name: SwipingCardsScreen.routeName,
+          builder: (context, state) => const SwipingCardsScreen(),
+        )
       ]),
 ]);

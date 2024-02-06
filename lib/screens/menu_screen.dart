@@ -3,6 +3,7 @@ import 'package:flutter_application_animation/screens/apple_watch_screen.dart';
 import 'package:flutter_application_animation/screens/explicit_animation_screen.dart';
 import 'package:flutter_application_animation/screens/implicit_animation_screen.dart';
 import 'package:flutter_application_animation/screens/screen.dart';
+import 'package:flutter_application_animation/screens/swiping_cards_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -15,7 +16,8 @@ class MenuScreen extends StatelessWidget {
       ImplicitAnimationScreen.routeName,
       ExplicitAnimationScreen.routeName,
       AppleWatchScreen.routeName,
-      CanvasScreen.routeName
+      CanvasScreen.routeName,
+      SwipingCardsScreen.routeName
     ];
     return Scaffold(
         appBar: AppBar(
