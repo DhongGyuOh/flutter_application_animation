@@ -6,6 +6,8 @@ import 'package:flutter_application_animation/screens/screen.dart';
 import 'package:flutter_application_animation/screens/swiping_cards_screen.dart';
 import 'package:go_router/go_router.dart';
 
+import 'music_player_screen.dart';
+
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
   static String routeName = "menuscreen";
@@ -17,7 +19,8 @@ class MenuScreen extends StatelessWidget {
       ExplicitAnimationScreen.routeName,
       AppleWatchScreen.routeName,
       CanvasScreen.routeName,
-      SwipingCardsScreen.routeName
+      SwipingCardsScreen.routeName,
+      MusicPlayerScreen.routeName
     ];
     return Scaffold(
         appBar: AppBar(
