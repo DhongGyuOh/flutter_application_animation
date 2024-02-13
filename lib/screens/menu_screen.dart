@@ -18,7 +18,7 @@ class MenuScreen extends StatelessWidget {
       ImplicitAnimationScreen.routeName,
       ExplicitAnimationScreen.routeName,
       AppleWatchScreen.routeName,
-      CanvasScreen.routeName,
+      TestScreen.routeName,
       SwipingCardsScreen.routeName,
       MusicPlayerScreen.routeName
     ];

@@ -12,6 +12,7 @@ class MusicPlayerScreen extends StatefulWidget {
 }
 
 class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
+  //viewportFraction: 수치가 낮을 수록 크기가 작아지며, 이전,이후 page가 보여지는 비율이 높아짐
   final PageController _pageController = PageController(viewportFraction: 0.8);
 
   int _currentPage = 0;

@@ -14,9 +14,9 @@ final GoRouter router = GoRouter(initialLocation: MenuScreen.routeURL, routes: [
       builder: (context, state) => const MenuScreen(),
       routes: [
         GoRoute(
-          path: CanvasScreen.routeURL,
-          name: CanvasScreen.routeName,
-          builder: (context, state) => const CanvasScreen(),
+          path: TestScreen.routeURL,
+          name: TestScreen.routeName,
+          builder: (context, state) => const TestScreen(),
         ),
         GoRoute(
           path: ImplicitAnimationScreen.routeURL,
