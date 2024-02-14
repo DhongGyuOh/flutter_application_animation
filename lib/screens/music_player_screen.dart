@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_animation/screens/music_plater_detail_screen.dart';
 
 class MusicPlayerScreen extends StatefulWidget {
   static String routeName = "musicplayer";
@@ -24,6 +25,20 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
     setState(() {
       _currentPage = newPage;
     });
+  }
+
+  void _onTap(int index) {
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 2000),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return FadeTransition(
+              opacity: animation,
+              child: MusicPlayerDetailScreen(index: index),
+            );
+          },
+        ));
   }
 
   @override
@@ -90,17 +105,23 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
                         final difference = (value - index).abs();
                         //scale: 양옆의 카드들의 Scale을 줄이기 위한 값계산 1에서 위치만큼 뺌
                         final scale = 1 - (difference * 0.15);
-                        return Transform.scale(
-                          scale: scale,
-                          child: Container(
-                              height: 470,
-                              clipBehavior: Clip.hardEdge,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(35),
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/movies/${index + 1}.jpg")),
-                              )),
+                        return GestureDetector(
+                          onTap: () => _onTap(index + 1),
+                          child: Hero(
+                            tag: "${index + 1}",
+                            child: Transform.scale(
+                              scale: scale,
+                              child: Container(
+                                  height: 470,
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(35),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/movies/${index + 1}.jpg")),
+                                  )),
+                            ),
+                          ),
                         );
                       }),
                   const SizedBox(
