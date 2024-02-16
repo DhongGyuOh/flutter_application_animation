@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_animation/screens/music_plater_detail_screen.dart';
+import 'package:flutter_application_animation/screens/music_player_detail_screen.dart';
 
 class MusicPlayerScreen extends StatefulWidget {
   static String routeName = "musicplayer";
