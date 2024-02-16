@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class TestScreen extends StatefulWidget {
@@ -11,85 +9,64 @@ class TestScreen extends StatefulWidget {
   State<TestScreen> createState() => _TestScreenState();
 }
 
-class _TestScreenState extends State<TestScreen> {
-  final PageController _pageController = PageController(viewportFraction: 0.6);
+class _TestScreenState extends State<TestScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 300),
+  );
+  late final Animation<double> _scale =
+      Tween(begin: 1.0, end: 1.5).animate(_animationController);
+  late final ValueNotifier<Offset> _dxy = ValueNotifier(Offset.zero);
 
-  int currentColor = 0;
-
-  List<Color> colorList = [
-    Colors.red,
-    Colors.orange,
-    Colors.yellow,
-    Colors.green,
-    Colors.blue,
-    Colors.indigo,
-    Colors.purple,
-  ];
-
-  void changePage(int newPage) {
-    currentColor = newPage;
-    setState(() {});
+  void _onPanStart(DragStartDetails details) {
+    _animationController.forward();
   }
 
-  @override
-  void initState() {
-    _pageController.addListener(() {
-      if (_pageController.page == null) return;
-    });
-    super.initState();
+  void _onPanUpdate(DragUpdateDetails details) {
+    _dxy.value = Offset(
+      _dxy.value.dx + details.delta.dx,
+      _dxy.value.dy + details.delta.dy,
+    );
   }
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
+  void _onPanEnd(DragEndDetails details) {
+    _animationController.reverse();
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(children: [
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 500),
-          switchInCurve: Curves.linear,
-          //배경이 되는 Container
-          child: Container(
-            //key를 사용하여 새로 리빌드되는 효과를 줌
-            key: ValueKey(currentColor),
-            color: colorList[currentColor],
-            child: BackdropFilter(
-              //blur 필터효과를 사용하여 흐리게 만들어 줌
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                color: Colors.black.withOpacity(0.3),
+      body: Center(
+        child: ValueListenableBuilder(
+          valueListenable: _dxy,
+          builder: (context, value, child) => GestureDetector(
+            onPanStart: _onPanStart,
+            onPanUpdate: _onPanUpdate,
+            onPanEnd: _onPanEnd,
+            child: Transform.translate(
+              offset: _dxy.value,
+              child: ScaleTransition(
+                scale: _scale,
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: _animationController.status ==
+                              AnimationStatus.completed
+                          ? Colors.indigo
+                          : Colors.pink,
+                      shape: BoxShape.circle),
+                  child: Text(
+                      '(${_dxy.value.dx.ceil()} , ${_dxy.value.dy.ceil()})'),
+                ),
               ),
             ),
           ),
         ),
-        Center(
-            child: PageView.builder(
-          controller: _pageController,
-          onPageChanged: changePage,
-          scrollDirection: Axis.vertical,
-          itemCount: colorList.length,
-          itemBuilder: (context, index) => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //PageView에 포함된 Container
-              Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: colorList[index],
-                    borderRadius: const BorderRadius.all(Radius.circular(45))),
-                width: 300,
-                height: 300,
-                child: Text(colorList[index].value.toString()),
-              ),
-            ],
-          ),
-        )),
-      ]),
+      ),
     );
   }
 }
