@@ -75,6 +75,7 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     _animationController.dispose();
     _marqueeController.dispose();
     _playPauseController.dispose();
+    _menuController.dispose();
     _timer.cancel();
     super.dispose();
   }
@@ -94,8 +95,16 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
   }
 
 //Menu 애니메이션(stagged Animation 구현)
+  final List<Map<String, dynamic>> _menus = [
+    {"icon": Icons.person, "text": "Profile"},
+    {"icon": Icons.notifications, "text": "Notifications"},
+    {"icon": Icons.settings, "text": "Settings"}
+  ];
+
   late final AnimationController _menuController = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 2000));
+      vsync: this,
+      duration: const Duration(milliseconds: 2000),
+      reverseDuration: const Duration(milliseconds: 1000));
 
   late final Animation<double> _screenScale = Tween(begin: 1.0, end: 0.65)
       .animate(CurvedAnimation(
@@ -113,11 +122,19 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
       .animate(CurvedAnimation(
           parent: _menuController,
           curve: const Interval(0.5, 0.7, curve: Curves.easeInOutCubic)));
-  late final Animation<Offset> _profileSlide =
+  late final List<Animation<Offset>> _profileSlide = [
+    for (int i = 0; i < _menus.length; i++)
       Tween(begin: const Offset(-1, 0), end: Offset.zero).animate(
           CurvedAnimation(
               parent: _menuController,
-              curve: const Interval(0.3, 0.7, curve: Curves.linear)));
+              curve: Interval(0.3, 0.7 + (0.1 * i), curve: Curves.linear)))
+  ];
+
+  late final Animation<Offset> _logoutSlide =
+      Tween(begin: const Offset(-1, 0), end: Offset.zero).animate(
+          CurvedAnimation(
+              parent: _menuController,
+              curve: const Interval(0.8, 1.0, curve: Curves.linear)));
 
   void _openMenu() {
     _menuController.forward();
@@ -147,33 +164,62 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
           ),
           body: Column(
             children: [
+              for (int i = 0; i < _menus.length; i++) ...[
+                const SizedBox(
+                  height: 30,
+                ),
+                SlideTransition(
+                  position: _profileSlide[i],
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Icon(
+                        _menus[i]["icon"],
+                        color: Colors.grey.shade200,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        _menus[i]["text"],
+                        style: TextStyle(
+                          color: Colors.grey.shade200,
+                          fontSize: 18,
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
               const SizedBox(
-                height: 30,
+                height: 400,
               ),
               SlideTransition(
-                position: _profileSlide,
-                child: Row(
+                position: _logoutSlide,
+                child: const Row(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 10,
                     ),
                     Icon(
-                      Icons.person,
-                      color: Colors.grey.shade200,
+                      Icons.logout,
+                      color: Colors.red,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 10,
                     ),
                     Text(
-                      "Profile",
+                      "Log Out",
                       style: TextStyle(
-                        color: Colors.grey.shade200,
+                        color: Colors.red,
                         fontSize: 18,
                       ),
                     )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

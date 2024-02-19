@@ -12,61 +12,38 @@ class TestScreen extends StatefulWidget {
 class _TestScreenState extends State<TestScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 300),
-  );
-  late final Animation<double> _scale =
-      Tween(begin: 1.0, end: 1.5).animate(_animationController);
-  late final ValueNotifier<Offset> _dxy = ValueNotifier(Offset.zero);
+      vsync: this, duration: const Duration(milliseconds: 1000));
+  late final Animation<Offset> _trans =
+      Tween(begin: const Offset(0, 0), end: const Offset(1, 1))
+          .animate(_animationController);
+  late final Animation<double> _opacity =
+      Tween(begin: 0.0, end: 1.0).animate(_animationController);
 
-  void _onPanStart(DragStartDetails details) {
+  void onTapforward() {
     _animationController.forward();
   }
 
-  void _onPanUpdate(DragUpdateDetails details) {
-    _dxy.value = Offset(
-      _dxy.value.dx + details.delta.dx,
-      _dxy.value.dy + details.delta.dy,
-    );
-  }
-
-  void _onPanEnd(DragEndDetails details) {
+  void onTapReverse() {
     _animationController.reverse();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Center(
-        child: ValueListenableBuilder(
-          valueListenable: _dxy,
-          builder: (context, value, child) => GestureDetector(
-            onPanStart: _onPanStart,
-            onPanUpdate: _onPanUpdate,
-            onPanEnd: _onPanEnd,
-            child: Transform.translate(
-              offset: _dxy.value,
-              child: ScaleTransition(
-                scale: _scale,
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                      color: _animationController.status ==
-                              AnimationStatus.completed
-                          ? Colors.indigo
-                          : Colors.pink,
-                      shape: BoxShape.circle),
-                  child: Text(
-                      '(${_dxy.value.dx.ceil()} , ${_dxy.value.dy.ceil()})'),
-                ),
-              ),
-            ),
+    return const Stack(
+      children: [
+        Scaffold(
+          backgroundColor: Colors.blue,
+          body: Center(
+            child: Text("첫번쨰 Stack 화면"),
           ),
         ),
-      ),
+        Scaffold(
+          backgroundColor: Colors.green,
+          body: Center(
+            child: Text("두번째 Stack 화면"),
+          ),
+        )
+      ],
     );
   }
 }
