@@ -18,8 +18,15 @@ class _RiveScreenState extends State<RiveScreen> {
       artboard,
       "State Machine 1",
       onStateChange: (stateMachineName, stateName) {
-        print(stateMachineName);
-        print(stateName);
+        //State가 바뀔 때 값을 가져옴
+        //stateMachineName:State Machine 1
+        //stateName: Correct, Incorrect, Idle
+        final snackBar = SnackBar(
+            content: Text(
+          '$stateMachineName / $stateName',
+          style: const TextStyle(fontSize: 28, color: Colors.yellow),
+        ));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       },
     )!;
     artboard.addController(_stateMachineController);
@@ -45,7 +52,7 @@ class _RiveScreenState extends State<RiveScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 500,
+              height: 400,
               width: 500,
               //https://rive.app/community/595-1139-bear-avatar-remix/
               child: RiveAnimation.asset(
