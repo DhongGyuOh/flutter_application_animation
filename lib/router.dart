@@ -3,6 +3,7 @@ import 'package:flutter_application_animation/screens/explicit_animation_screen.
 import 'package:flutter_application_animation/screens/implicit_animation_screen.dart';
 import 'package:flutter_application_animation/screens/menu_screen.dart';
 import 'package:flutter_application_animation/screens/music_player_screen.dart';
+import 'package:flutter_application_animation/screens/rive_screen.dart';
 import 'package:flutter_application_animation/screens/screen.dart';
 import 'package:flutter_application_animation/screens/swiping_cards_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -42,6 +43,11 @@ final GoRouter router = GoRouter(initialLocation: MenuScreen.routeURL, routes: [
           path: MusicPlayerScreen.routeURL,
           name: MusicPlayerScreen.routeName,
           builder: (context, state) => const MusicPlayerScreen(),
+        ),
+        GoRoute(
+          path: RiveScreen.routeURL,
+          name: RiveScreen.routeName,
+          builder: (context, state) => const RiveScreen(),
         )
       ]),
 ]);
