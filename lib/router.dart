@@ -1,10 +1,12 @@
 import 'package:flutter_application_animation/screens/apple_watch_screen.dart';
+import 'package:flutter_application_animation/screens/container_transform_screen.dart';
 import 'package:flutter_application_animation/screens/explicit_animation_screen.dart';
 import 'package:flutter_application_animation/screens/implicit_animation_screen.dart';
 import 'package:flutter_application_animation/screens/menu_screen.dart';
 import 'package:flutter_application_animation/screens/music_player_screen.dart';
 import 'package:flutter_application_animation/screens/rive_screen.dart';
 import 'package:flutter_application_animation/screens/screen.dart';
+import 'package:flutter_application_animation/screens/shared_axis_screen.dart';
 import 'package:flutter_application_animation/screens/swiping_cards_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -48,6 +50,16 @@ final GoRouter router = GoRouter(initialLocation: MenuScreen.routeURL, routes: [
           path: RiveScreen.routeURL,
           name: RiveScreen.routeName,
           builder: (context, state) => const RiveScreen(),
+        ),
+        GoRoute(
+          path: ContainerTransformScreen.routeURL,
+          name: ContainerTransformScreen.routeName,
+          builder: (context, state) => const ContainerTransformScreen(),
+        ),
+        GoRoute(
+          path: SharedAxisScreen.routeURL,
+          name: SharedAxisScreen.routeName,
+          builder: (context, state) => const SharedAxisScreen(),
         )
       ]),
 ]);
