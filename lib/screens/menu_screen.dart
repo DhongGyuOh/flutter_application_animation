@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_animation/screens/apple_watch_screen.dart';
 import 'package:flutter_application_animation/screens/explicit_animation_screen.dart';
+import 'package:flutter_application_animation/screens/fade_through_screen.dart';
 import 'package:flutter_application_animation/screens/implicit_animation_screen.dart';
 import 'package:flutter_application_animation/screens/rive_screen.dart';
 import 'package:flutter_application_animation/screens/screen.dart';
@@ -26,7 +27,8 @@ class MenuScreen extends StatelessWidget {
       MusicPlayerScreen.routeName,
       RiveScreen.routeName,
       ContainerTransformScreen.routeName,
-      SharedAxisScreen.routeName
+      SharedAxisScreen.routeName,
+      FadeThroughScreen.routeName
     ];
     return Scaffold(
         appBar: AppBar(

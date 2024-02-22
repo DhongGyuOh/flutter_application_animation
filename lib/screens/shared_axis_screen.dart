@@ -1,4 +1,8 @@
+import 'package:animations/animations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class SharedAxisScreen extends StatefulWidget {
   static String routeURL = "sharedaxis";
@@ -12,7 +16,9 @@ class SharedAxisScreen extends StatefulWidget {
 class _SharedAxisScreenState extends State<SharedAxisScreen> {
   int _currentImage = 1;
   void _goToImange(int newImage) {
-    _currentImage = newImage;
+    setState(() {
+      _currentImage = newImage;
+    });
   }
 
   @override
@@ -23,12 +29,38 @@ class _SharedAxisScreenState extends State<SharedAxisScreen> {
       ),
       body: Column(
         children: [
-          for (var i in [1, 2, 3, 4])
-            Row(
-              children: [
-                ElevatedButton(onPressed: () {}, child: Text(i.toString()))
-              ],
-            )
+          PageTransitionSwitcher(
+            transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
+                SharedAxisTransition(
+                    //2개의 child간의 SharedAxis Trans 애니메이션을 도와주는 위젯
+                    animation: primaryAnimation,
+                    secondaryAnimation: secondaryAnimation,
+                    transitionType: SharedAxisTransitionType.horizontal,
+                    child: child),
+            child: Container(
+                key: ValueKey(_currentImage),
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(45))),
+                width: 400,
+                height: 400,
+                child: Image.asset(
+                  "assets/movies/$_currentImage.jpg",
+                  fit: BoxFit.cover,
+                )),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              for (int i = 1; i <= 5; i++)
+                ElevatedButton(
+                    onPressed: () => _goToImange(i), child: Text(i.toString()))
+            ],
+          )
         ],
       ),
     );

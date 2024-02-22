@@ -1,6 +1,7 @@
 import 'package:flutter_application_animation/screens/apple_watch_screen.dart';
 import 'package:flutter_application_animation/screens/container_transform_screen.dart';
 import 'package:flutter_application_animation/screens/explicit_animation_screen.dart';
+import 'package:flutter_application_animation/screens/fade_through_screen.dart';
 import 'package:flutter_application_animation/screens/implicit_animation_screen.dart';
 import 'package:flutter_application_animation/screens/menu_screen.dart';
 import 'package:flutter_application_animation/screens/music_player_screen.dart';
@@ -60,6 +61,11 @@ final GoRouter router = GoRouter(initialLocation: MenuScreen.routeURL, routes: [
           path: SharedAxisScreen.routeURL,
           name: SharedAxisScreen.routeName,
           builder: (context, state) => const SharedAxisScreen(),
-        )
+        ),
+        GoRoute(
+          path: FadeThroughScreen.routeURL,
+          name: FadeThroughScreen.routeName,
+          builder: (context, state) => const FadeThroughScreen(),
+        ),
       ]),
 ]);
