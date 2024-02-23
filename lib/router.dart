@@ -9,6 +9,7 @@ import 'package:flutter_application_animation/screens/rive_screen.dart';
 import 'package:flutter_application_animation/screens/screen.dart';
 import 'package:flutter_application_animation/screens/shared_axis_screen.dart';
 import 'package:flutter_application_animation/screens/swiping_cards_screen.dart';
+import 'package:flutter_application_animation/screens/wallet_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(initialLocation: MenuScreen.routeURL, routes: [
@@ -67,5 +68,10 @@ final GoRouter router = GoRouter(initialLocation: MenuScreen.routeURL, routes: [
           name: FadeThroughScreen.routeName,
           builder: (context, state) => const FadeThroughScreen(),
         ),
+        GoRoute(
+          path: WalletScreen.routeURL,
+          name: WalletScreen.routeName,
+          builder: (context, state) => const WalletScreen(),
+        )
       ]),
 ]);
